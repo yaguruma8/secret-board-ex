@@ -8,6 +8,7 @@ const fs = require('fs')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+const postsRouter = require('./routes/posts');
 
 var app = express();
 
@@ -24,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/posts', postsRouter);
 
 // ファビコンの表示
 app.use('/favicon.ico', (req, res, next) => {
