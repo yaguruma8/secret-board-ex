@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const helmet = require('helmet');
+const fs = require('fs')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -23,6 +24,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+// ファビコンの表示
+app.use('/favicon.ico', (req, res, next) => {
+  const favicon = fs.readFileSync('./favicon.ico');
+  res.send(favicon);
+})
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
