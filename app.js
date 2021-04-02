@@ -1,37 +1,38 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+'use strict';
+// モジュールの読み込み
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const helmet = require('helmet');
-const fs = require('fs')
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+// ルーターモジュールの読み込み
+const indexRouter = require('./routes/index');
 const postsRouter = require('./routes/posts');
+const deleteRouter = require('./routes/delete');
+const logoutRouter = require('./routes/logout');
 
-var app = express();
+// Applicationの作成
+const app = express();
 
-app.use(helmet());
-// view engine setup
+// テンプレートエンジンの設定
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+// 各種モジュールの設定
+app.use(helmet());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// ルーティングの設定
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
-
-// ファビコンの表示
-app.use('/favicon.ico', (req, res, next) => {
-  const favicon = fs.readFileSync('./favicon.ico');
-  res.send(favicon);
-})
+app.use('/delete', deleteRouter);
+app.use('/logout', logoutRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
