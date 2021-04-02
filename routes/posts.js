@@ -3,23 +3,18 @@ const router = express.Router();
 
 const contents = ['おはよう', 'こんにちは', 'さようなら'];
 
-/* GET post page. */
+// 投稿一覧の表示
 router.get('/', function (req, res, next) {
   res.render('posts', { contents: contents });
 });
 
+// 投稿
+// 保存後リダイレクト
 router.post('/', (req, res, next) => {
   // formのcontentを受け取る
   contents.push(req.body.content);
-  redirect(req, res);
+  res.redirect('/posts');
 });
 
-function redirect(req, res) {
-  console.info('redirect');
-  res.writeHead(303, {
-    Location: '/posts',
-  });
-  res.end();
-}
 
 module.exports = router;
