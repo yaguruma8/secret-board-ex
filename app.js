@@ -11,7 +11,7 @@ const favicon = require('serve-favicon');
 // ルーターモジュールの読み込み
 const indexRouter = require('./routes/index');
 const postsRouter = require('./routes/posts');
-const loginRouter = require('./rotest/login');
+const loginRouter = require('./routes/login');
 const logoutRouter = require('./routes/logout');
 
 // Applicationの作成
@@ -30,7 +30,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ファビコンの設定
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 // ルーティングの設定
 app.use('/', indexRouter);
