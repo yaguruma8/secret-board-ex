@@ -20,7 +20,7 @@ const contents = ['おはよう', 'こんにちは', 'さようなら'];
 
 // 投稿一覧の表示
 router.get('/', function (req, res, next) {
-  res.render('posts', { contents: contents });
+  res.send('this is posts page.');
 });
 
 // 投稿
