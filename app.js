@@ -10,7 +10,7 @@ const helmet = require('helmet');
 // ルーターモジュールの読み込み
 const indexRouter = require('./routes/index');
 const postsRouter = require('./routes/posts');
-const loginRouter = require('./rotest/login');
+const loginRouter = require('./routes/login');
 const logoutRouter = require('./routes/logout');
 
 // Applicationの作成
