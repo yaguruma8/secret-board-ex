@@ -6,6 +6,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const helmet = require('helmet');
+const favicon = require('serve-favicon');
 
 // ルーターモジュールの読み込み
 const indexRouter = require('./routes/index');
@@ -28,6 +29,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// ファビコンの設定
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 // ルーティングの設定
 app.use('/', indexRouter);
