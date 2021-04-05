@@ -2,10 +2,9 @@ var express = require('express');
 var router = express.Router();
 
 /*
-  /
-    GET
-    /login へのリンク
-    index.pug
+  /login
+    GET Basic認証
+    認証成功したら /posts へリダイレクト
 
 */
 router.get('/', function(req, res, next) {

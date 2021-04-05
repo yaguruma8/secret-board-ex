@@ -10,7 +10,7 @@ const helmet = require('helmet');
 // ルーターモジュールの読み込み
 const indexRouter = require('./routes/index');
 const postsRouter = require('./routes/posts');
-const deleteRouter = require('./routes/delete');
+const loginRouter = require('./rotest/login');
 const logoutRouter = require('./routes/logout');
 
 // Applicationの作成
@@ -28,10 +28,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 // ルーティングの設定
 app.use('/', indexRouter);
+// /postsの接続にはBasic認証をかける
 app.use('/posts', postsRouter);
-app.use('/delete', deleteRouter);
+app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);
 
 // catch 404 and forward to error handler
