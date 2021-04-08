@@ -29,6 +29,11 @@ router.post('/delete', (req, res, next) => {
   // TODO: 削除後 /posts にリダイレクト
 })
 
+// POST 新規投稿
+router.post('/add', (req, res, next) => {
+  res.send('new posted!!!');
+  // TODO: 投稿後 /posts にリダイレクト
+})
 
 // 投稿
 // 保存後リダイレクト
