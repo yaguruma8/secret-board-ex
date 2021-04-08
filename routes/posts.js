@@ -14,10 +14,6 @@ const Post = require('../model/postModel');
   POST 新規投稿 /posts にリダイレクト
   posts.pug
 
- /posts/delete
-  POST 削除 /posts にリダイレクト
-  posts.pug
-
 */
 
 // GET 投稿一覧表示
@@ -26,6 +22,13 @@ router.get('/', function (req, res, next) {
     res.render('posts', { posts: posts, user: req.user });
   });
 });
+
+// POST 削除
+router.post('/delete', (req, res, next) => {
+  res.send('delete!!!');
+  // TODO: 削除後 /posts にリダイレクト
+})
+
 
 // 投稿
 // 保存後リダイレクト
