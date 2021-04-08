@@ -9,3 +9,5 @@ block postCards
         p #{post.content}
       div.card-footer
         p #{post.postedBy}
+        form(action="/posts/delete", method="post")
+          button.btn.btn-danger(type="submit") 削除
