@@ -4,8 +4,8 @@ block postCards
   each post in posts
     div.card.my-3
       div.card-header
-        p #{post.id} : #{post.name}
+        p #{post.id} : #{user}
       div.card-body
         p #{post.content}
       div.card-footer
-        p #{post.date}
+        p #{post.postedBy}
