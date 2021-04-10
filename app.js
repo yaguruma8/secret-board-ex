@@ -11,7 +11,6 @@ const favicon = require('serve-favicon');
 // ルーターモジュールの読み込み
 const indexRouter = require('./routes/index');
 const postsRouter = require('./routes/posts');
-const loginRouter = require('./routes/login');
 const logoutRouter = require('./routes/logout');
 
 // Applicationの作成
@@ -36,7 +35,6 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use('/', indexRouter);
 // /postsの接続にはBasic認証をかける
 app.use('/posts', postsRouter);
-app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);
 
 // catch 404 and forward to error handler
