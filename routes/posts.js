@@ -29,13 +29,16 @@ router.post('/delete', (req, res, next) => {
   // TODO: 削除後 /posts にリダイレクト
 })
 
-
-// 投稿
-// 保存後リダイレクト
-router.post('/', (req, res, next) => {
-  // formのcontentを受け取る
-  contents.push(req.body.content);
-  res.redirect('/posts');
-});
+// POST 新規投稿
+router.post('/add', (req, res, next) => {
+  console.log(req.body.content);
+  Post.create({
+    content: req.body.content,
+    postedBy: req.user,
+    trackingCookie: null
+  }).then(() => {
+    res.redirect('/posts');
+  })
+})
 
 module.exports = router;
