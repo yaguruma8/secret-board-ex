@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const helmet = require('helmet');
 const favicon = require('serve-favicon');
+const auth = require('./lib/auth');
 
 // ルーターモジュールの読み込み
 const indexRouter = require('./routes/index');
@@ -34,7 +35,7 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 // ルーティングの設定
 app.use('/', indexRouter);
 // /postsの接続にはBasic認証をかける
-app.use('/posts', postsRouter);
+app.use('/posts', auth, postsRouter);
 app.use('/logout', logoutRouter);
 
 // catch 404 and forward to error handler
