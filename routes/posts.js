@@ -42,8 +42,8 @@ function getUserName(req) {
   const data = req.get('Authorization').split(' ')[1];
   // Base64のデコードはBufferを使う
   const size = Buffer.byteLength(data, 'base64');
-  const userObj = Buffer.alloc(size, data, 'base64').toString();
-  return userObj.split(':')[0];
+  const userDataStr = Buffer.alloc(size, data, 'base64').toString();
+  return userDataStr.split(':')[0];
 }
 
 module.exports = router;
