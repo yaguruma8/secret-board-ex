@@ -12,6 +12,7 @@ const Post = require('../model/postModel');
 
 // GET 投稿一覧表示
 router.get('/', function (req, res, next) {
+  // 降順（新しい順）で表示する
   Post.findAll({ order: [['id', 'DESC']] }).then((posts) => {
     const userName = getUserName(req);
     res.render('posts', { posts: posts, userName: userName });
@@ -26,7 +27,6 @@ router.post('/delete', (req, res, next) => {
 
 // POST 新規投稿
 router.post('/add', (req, res, next) => {
-  console.log(req.body.content);
   Post.create({
     content: req.body.content,
     postedBy: getUserName(req),
