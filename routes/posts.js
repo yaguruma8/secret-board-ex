@@ -19,7 +19,8 @@ const Post = require('../model/postModel');
 // GET 投稿一覧表示
 router.get('/', function (req, res, next) {
   Post.findAll().then((posts) => {
-    res.render('posts', { posts: posts, user: req.user });
+    const userName = getUserName(req);
+    res.render('posts', { posts: posts, user: userName });
   });
 });
 
@@ -27,18 +28,28 @@ router.get('/', function (req, res, next) {
 router.post('/delete', (req, res, next) => {
   res.send('delete!!!');
   // TODO: 削除後 /posts にリダイレクト
-})
+});
 
 // POST 新規投稿
 router.post('/add', (req, res, next) => {
   console.log(req.body.content);
   Post.create({
     content: req.body.content,
-    postedBy: req.user,
-    trackingCookie: null
+    postedBy: getUserName(req),
+    trackingCookie: null,
   }).then(() => {
     res.redirect('/posts');
-  })
-})
+  });
+});
+
+// 認証したユーザー名の取得
+function getUserName(req) {
+  // Authorizationヘッダーからuser:passを取得
+  const data = req.get('Authorization').split(' ')[1];
+  // Base64のデコードはBufferを使う
+  const size = Buffer.byteLength(data, 'base64');
+  const userObj = Buffer.alloc(size, data, 'base64').toString();
+  return userObj.split(':')[0];
+}
 
 module.exports = router;
