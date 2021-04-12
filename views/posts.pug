@@ -8,6 +8,8 @@ block postCards
       div.card-body
         p #{post.content}
       div.card-footer
-        p #{post.postedBy}
+        - var isAdmin = (userName === 'admin')
+        if isAdmin 
+          p #{post.postedBy}
         form(action="/posts/delete", method="post")
           button.btn.btn-danger(type="submit") 削除

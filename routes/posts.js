@@ -20,7 +20,7 @@ const Post = require('../model/postModel');
 router.get('/', function (req, res, next) {
   Post.findAll().then((posts) => {
     const userName = getUserName(req);
-    res.render('posts', { posts: posts, user: userName });
+    res.render('posts', { posts: posts, userName: userName });
   });
 });
 
