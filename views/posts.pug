@@ -13,4 +13,4 @@ block postCards
         if isAdmin 
           p #{post.postedBy}
         form(action="/posts/delete", method="post")
-          button.btn.btn-danger(type="submit") 削除
+          button.btn.btn-danger.float-right(type="submit") 削除
