@@ -8,7 +8,7 @@ block postCards
       div.card-body
         p #{post.content}
       div.card-footer
-        p #{post.createdAt}
+        p 投稿日：#{post.formattedCreatedAt}
         - var isAdmin = (userName === 'admin')
         if isAdmin 
           p #{post.postedBy}

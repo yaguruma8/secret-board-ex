@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../model/postModel');
+const moment = require('moment');
 
 /*
 
@@ -15,6 +16,11 @@ router.get('/', function (req, res, next) {
   // 降順（新しい順）で表示する
   Post.findAll({ order: [['id', 'DESC']] }).then((posts) => {
     const userName = getUserName(req);
+    posts.forEach((post) => {
+      post.formattedCreatedAt = moment(post.createdAt)
+        .utcOffset(8)
+        .format('YYYY/MM/DD HH:mm:ss');
+    });
     res.render('posts', { posts: posts, userName: userName });
   });
 });
