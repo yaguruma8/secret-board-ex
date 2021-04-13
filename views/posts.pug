@@ -11,7 +11,7 @@ block postCards
         p 投稿日：#{post.formattedCreatedAt}
         - var isAdmin = (userName === 'admin')
         if isAdmin 
-          p #{post.postedBy}
+          p 投稿者：#{post.postedBy}
         - var isDeleted = (isAdmin || userName === post.postedBy)
         if isDeleted
           form(action="/posts/delete", method="post")
