@@ -6,7 +6,7 @@ block postCards
       div.card-header
         p #{post.id} : #{post.postedBy}
       div.card-body
-        p #{post.content}
+        p(style="white-space:pre-wrap") #{post.content}
       div.card-footer
         p 投稿日：#{post.formattedCreatedAt}
         - var isAdmin = (userName === 'admin')
