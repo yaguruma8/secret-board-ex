@@ -1,12 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../model/postModel');
-
-// const posts = [
-//   { id: 1, name: 'taro', content: 'おはようございます。', date: '2021/1/1' },
-//   { id: 2, name: 'hanako', content: '今日も一日元気です。', date: '2021/2/2' },
-//   { id: 3, name: 'jiro', content: 'ありがとう。', date: '2021/3/3' },
-// ];
+const moment = require('moment');
 
 /*
 
@@ -18,8 +13,15 @@ const Post = require('../model/postModel');
 
 // GET 投稿一覧表示
 router.get('/', function (req, res, next) {
-  Post.findAll().then((posts) => {
-    res.render('posts', { posts: posts, user: req.user });
+  // 降順（新しい順）で表示する
+  Post.findAll({ order: [['id', 'DESC']] }).then((posts) => {
+    const userName = getUserName(req);
+    posts.forEach((post) => {
+      post.formattedCreatedAt = moment(post.createdAt)
+        .utcOffset(8)
+        .format('YYYY/MM/DD HH:mm:ss');
+    });
+    res.render('posts', { posts: posts, userName: userName });
   });
 });
 
@@ -27,18 +29,27 @@ router.get('/', function (req, res, next) {
 router.post('/delete', (req, res, next) => {
   res.send('delete!!!');
   // TODO: 削除後 /posts にリダイレクト
-})
+});
 
 // POST 新規投稿
 router.post('/add', (req, res, next) => {
-  console.log(req.body.content);
   Post.create({
     content: req.body.content,
-    postedBy: req.user,
-    trackingCookie: null
+    postedBy: getUserName(req),
+    trackingCookie: null,
   }).then(() => {
     res.redirect('/posts');
-  })
-})
+  });
+});
+
+// 認証したユーザー名の取得
+function getUserName(req) {
+  // Authorizationヘッダーからuser:passを取得
+  const data = req.get('Authorization').split(' ')[1];
+  // Base64のデコードはBufferを使う
+  const size = Buffer.byteLength(data, 'base64');
+  const userDataStr = Buffer.alloc(size, data, 'base64').toString();
+  return userDataStr.split(':')[0];
+}
 
 module.exports = router;
