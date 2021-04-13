@@ -27,6 +27,7 @@ router.get('/', function (req, res, next) {
 
 // POST 削除
 router.post('/delete', (req, res, next) => {
+  console.log(req.body.id);
   res.send('delete!!!');
   // TODO: 削除後 /posts にリダイレクト
 });
