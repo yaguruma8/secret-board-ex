@@ -27,9 +27,13 @@ router.get('/', function (req, res, next) {
 
 // POST 削除
 router.post('/delete', (req, res, next) => {
-  console.log(req.body.id);
-  res.send('delete!!!');
-  // TODO: 削除後 /posts にリダイレクト
+  Post.findByPk(req.body.id).then((post) => {
+    // 削除後 /posts にリダイレクト
+    post.destroy().then(() => {
+      console.info('削除されました');
+      res.redirect('/posts');
+    });
+  });
 });
 
 // POST 新規投稿
