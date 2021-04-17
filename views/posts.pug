@@ -15,4 +15,5 @@ block postCards
         - var isDeleted = (isAdmin || userName === post.postedBy)
         if isDeleted
           form(action="/posts/delete", method="post")
+            input(type="hidden", name="id" value=post.id)
             button.btn.btn-danger.float-right(type="submit") 削除

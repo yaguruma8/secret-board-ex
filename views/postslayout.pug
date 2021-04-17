@@ -1,13 +1,16 @@
 extends layout.pug 
 
 block content
+    div.my-3
+      a.btn.btn-info.float-right(href="/logout") ログアウト 
     h1 秘密の匿名掲示板
-    a.btn.btn-info(href="/logout") ログアウト 
+    p #{userName} でログイン中
     h2 新規投稿
     form(action="/posts/add", method="post")
       div.form-group
         textarea.form-control(name="content", rows="4")
       div.form-group
         button.btn.btn-primary(type="submit") 投稿
+    hr
     h2 投稿一覧
     block postCards

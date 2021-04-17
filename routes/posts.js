@@ -3,14 +3,6 @@ const router = express.Router();
 const Post = require('../model/postModel');
 const moment = require('moment');
 
-/*
-
- /posts/add
-  POST 新規投稿 /posts にリダイレクト
-  posts.pug
-
-*/
-
 // GET 投稿一覧表示
 router.get('/', function (req, res, next) {
   // 降順（新しい順）で表示する
@@ -25,12 +17,6 @@ router.get('/', function (req, res, next) {
   });
 });
 
-// POST 削除
-router.post('/delete', (req, res, next) => {
-  res.send('delete!!!');
-  // TODO: 削除後 /posts にリダイレクト
-});
-
 // POST 新規投稿
 router.post('/add', (req, res, next) => {
   Post.create({
@@ -42,6 +28,17 @@ router.post('/add', (req, res, next) => {
   });
 });
 
+// POST 削除
+router.post('/delete', (req, res, next) => {
+  Post.findByPk(req.body.id).then((post) => {
+    post.destroy().then(() => {
+      console.info('削除されました');
+      res.redirect('/posts');
+    });
+  });
+});
+
+// ユーティリティ関数
 // 認証したユーザー名の取得
 function getUserName(req) {
   // Authorizationヘッダーからuser:passを取得
