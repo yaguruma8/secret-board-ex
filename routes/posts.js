@@ -2,9 +2,16 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../model/postModel');
 const moment = require('moment');
+const Cookies = require('cookies');
+
+const trackingIdKey = 'tracking_id';
 
 // GET 投稿一覧表示
 router.get('/', function (req, res, next) {
+  // cookieの取得
+  const cookies = new Cookies(req, res);
+  addTrackingCookie(cookies);
+
   // 降順（新しい順）で表示する
   Post.findAll({ order: [['id', 'DESC']] }).then((posts) => {
     const userName = getUserName(req);
@@ -47,6 +54,21 @@ function getUserName(req) {
   const size = Buffer.byteLength(data, 'base64');
   const userDataStr = Buffer.alloc(size, data, 'base64').toString();
   return userDataStr.split(':')[0];
+}
+
+// cookieをセットする
+function addTrackingCookie(cookies) {
+  // cookieが取得できない時のみ新しく作成する
+  if (cookies.get(trackingIdKey)) {
+    console.log('cookieは設定済み');
+    return;
+  }
+  console.log('新しいcookieを作成');
+  const trackingId = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
+  // とりあえず24時間後に設定
+  // todo: 23:59:59までの期限にする方法を調べる
+  const tomorrow = new Date(Date.now() + 1000 * 60 * 60 * 24);
+  cookies.set(trackingIdKey, trackingId, { expires: tomorrow });
 }
 
 module.exports = router;
