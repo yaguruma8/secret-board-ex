@@ -26,10 +26,11 @@ router.get('/', function (req, res, next) {
 
 // POST 新規投稿
 router.post('/add', (req, res, next) => {
+  const cookies = new Cookies(req, res);
   Post.create({
     content: req.body.content,
     postedBy: getUserName(req),
-    trackingCookie: null,
+    trackingCookie: cookies.get(trackingIdKey),
   }).then(() => {
     res.redirect('/posts');
   });
