@@ -60,15 +60,21 @@ function getUserName(req) {
 function addTrackingCookie(cookies) {
   // cookieが取得できない時のみ新しく作成する
   if (cookies.get(trackingIdKey)) {
-    console.log('cookieは設定済み');
     return;
   }
-  console.log('新しいcookieを作成');
   const trackingId = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
-  // とりあえず24時間後に設定
-  // todo: 23:59:59までの期限にする方法を調べる
-  const tomorrow = new Date(Date.now() + 1000 * 60 * 60 * 24);
-  cookies.set(trackingIdKey, trackingId, { expires: tomorrow });
+  // 当日中は同じtracking_idにする
+  const now = new Date();
+  const limit = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+    23,
+    59,
+    59,
+    999
+  );
+  cookies.set(trackingIdKey, trackingId, { expires: limit });
 }
 
 module.exports = router;
