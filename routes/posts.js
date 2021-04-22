@@ -19,6 +19,10 @@ router.get('/', function (req, res, next) {
       post.formattedCreatedAt = moment(post.createdAt)
         .utcOffset(8)
         .format('YYYY/MM/DD HH:mm:ss');
+      post.formattedPostedName =
+        post.postedBy === 'admin'
+          ? '管理人★'
+          : Number.parseInt(post.trackingCookie, 10).toString(16);
     });
     res.render('posts', { posts: posts, userName: userName });
   });

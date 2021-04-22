@@ -4,7 +4,7 @@ block postCards
   each post in posts
     div.card.my-3
       div.card-header
-        p #{post.id} : #{post.postedBy}
+        p #{post.id} : #{post.formattedPostedName}
       div.card-body
         p(style="white-space:pre-wrap") #{post.content}
       div.card-footer
